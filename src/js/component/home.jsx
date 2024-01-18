@@ -9,16 +9,15 @@ const Home = () => {
   const [todos, setToDos] = useState(["tarea 1", "tarea 2", "tarea 3"]);
 
   const handleClick = () => {
-    console.log("se ejecuta onclick");
-    setToDos([...todos, newToDo])
+    setToDos([...todos, newToDo]);
   };
 
-  const deleteTask = () => {
-
-  }
+  const deleteTask = (index) => {
+    console.log(index)
+  };
 
   const handleChange = () => {
-    console.log(event.target.value);
+    // console.log(event.target.value);
     setNewToDo(event.target.value);
   };
   return (
@@ -30,16 +29,16 @@ const Home = () => {
         <button onClick={handleClick}>Set up ToDo</button>
       </div>
       <p>
-        Nueva tarea agregada: <b>{newToDo}</b>
+        Ultima tarea agregada: <b>{newToDo}</b>
       </p>
       <ul className="container">
-        {todos.map((todo) => {
-          return(
+        {todos.map((todo, index) => {
+          return (
             <li className="d-flex justify-content-between">
-              {todo} <button><i class="bi bi-trash"></i></button>
+              {todo} <button onClick={deleteTask(index)} className="btn btn-danger my-2">X</button>
             </li>
-          )
-          })}
+          );
+        })}
       </ul>
     </div>
   );
