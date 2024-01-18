@@ -13,7 +13,9 @@ const Home = () => {
   };
 
   const deleteTask = (index) => {
-    console.log(index)
+    console.log(index);
+    const newestList = todos.filter((todo, i) => i !== index);
+    setToDos(newestList);
   };
 
   const handleChange = () => {
@@ -23,23 +25,37 @@ const Home = () => {
   return (
     <div className="text-center">
       <h1 className="text-center mt-5">ToDo list</h1>
+      <div className="container">
+        <div className="d-flex">
+          <input type="text" className="form-control" onChange={handleChange} />
+          <button className="btn btn-success ms-2" onClick={handleClick}>
+            Add task
+          </button>
+        </div>
+        <p>
+          Ultima tarea agregada: <b>{newToDo}</b>
+        </p>
 
-      <div>
-        <input type="text" onChange={handleChange} />
-        <button onClick={handleClick}>Set up ToDo</button>
+        <ul className="card list-group">
+          {todos.map((todo, index) => {
+            return (
+              <li
+                className={`d-flex justify-content-between card-body list-group-item align-items-center fw-bold ${
+                  index % 2 === 0 ? "bg-light" : ""
+                }`}
+              >
+                {todo}{" "}
+                <button
+                  onClick={() => deleteTask(index)}
+                  className="btn btn-danger my-2"
+                >
+                  X
+                </button>
+              </li>
+            );
+          })}
+        </ul>
       </div>
-      <p>
-        Ultima tarea agregada: <b>{newToDo}</b>
-      </p>
-      <ul className="container">
-        {todos.map((todo, index) => {
-          return (
-            <li className="d-flex justify-content-between">
-              {todo} <button onClick={deleteTask(index)} className="btn btn-danger my-2">X</button>
-            </li>
-          );
-        })}
-      </ul>
     </div>
   );
 };
