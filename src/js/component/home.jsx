@@ -6,11 +6,16 @@ import rigoImage from "../../img/rigo-baby.jpg";
 //create your first component
 const Home = () => {
   const [newToDo, setNewToDo] = useState("tarea agregada");
-  const [todos, setToDos] = useState("tarea 1", "tarea 2", "tarea 3");
+  const [todos, setToDos] = useState(["tarea 1", "tarea 2", "tarea 3"]);
 
   const handleClick = () => {
     console.log("se ejecuta onclick");
+    setToDos([...todos, newToDo])
   };
+
+  const deleteTask = () => {
+
+  }
 
   const handleChange = () => {
     console.log(event.target.value);
@@ -27,14 +32,14 @@ const Home = () => {
       <p>
         Nueva tarea agregada: <b>{newToDo}</b>
       </p>
-      <ul>
-        {todos.map((todo) =>{
+      <ul className="container">
+        {todos.map((todo) => {
           return(
-            <li>
-              {todo}
+            <li className="d-flex justify-content-between">
+              {todo} <button><i class="bi bi-trash"></i></button>
             </li>
           )
-        })}
+          })}
       </ul>
     </div>
   );
