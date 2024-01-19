@@ -8,14 +8,15 @@ const Home = () => {
 
   // handleClick para agregar una nueva tarea
   const handleClick = () => {
-    setToDos([...todos, newToDo]);
+    // setToDos([...todos, newToDo]);
+    updateTask();
   };
 
   //iniciar el ToDo List
   const getTasks = async () => {
     try {
       let response = await fetch(
-        "https://playground.4geeks.com/apis/fake/todos/user/Juan_Lopez"
+        "https://playground.4geeks.com/apis/fake/todos/user/Juan.Lopez"
       );
       let data = await response.json();
       console.log(data);
@@ -29,25 +30,44 @@ const Home = () => {
   const updateTask = async () => {
     try {
       const response = await fetch(
-        "https://playground.4geeks.com/apis/fake/todos/user/Juan_Lopez",
+        "https://playground.4geeks.com/apis/fake/todos/user/Juan.Lopez",
         {
           method: "PUT",
-          body: JSON.stringify(todos),
+          body: JSON.stringify([...todos, { done: false, label: newToDo }]),
           headers: {
             "Content-Type": "application/json",
           },
         }
       );
+      if (response.ok) {
+        getTasks();
+      }
     } catch (error) {
       console.log(error);
     }
   };
 
   // funcion de delete para eliminar las tareas al presionar un boton "X"
-  const deleteTask = (index) => {
+  const deleteTask = async (index) => {
     console.log(index);
     const newestList = todos.filter((todo, i) => i !== index);
-    setToDos(newestList);
+    try {
+      const response = await fetch(
+        "https://playground.4geeks.com/apis/fake/todos/user/Juan.Lopez",
+        {
+          method: "PUT",
+          body: JSON.stringify(newestList),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      if (response.ok) {
+        getTasks();
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   // handleChange para registrar la nueva tarea escrita en el input
